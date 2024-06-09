@@ -7,7 +7,7 @@ To support the classification, we present a quantitative evaluation framework fo
 
 DeepCSS is evaluated on four types of code smell severity. The experimental results show that DeepCSS can achieve an accuracy ranging from 95.95\% to 99.39\%. Furthermore, it is compared against two existing works and obtains an improvement in F1-score of 6.38\% and 0.84\% on average, demonstrating the effectiveness of our approach.
 ## Dataset
-1. Identifiers such as ProjectName, PackageName, and ClassName MethodName are filtered by symbols and stop words.
-2. Features such as is_constructor, is_abstract, is_inner, and is_static are of bool type and are converted into binary values of 0 or 1.
-3. Missing and outlier values are deleted. <br>
-The datasets are preprocessed after the above steps, which the pre-trained model can directly train to convert the text into word-vector. The processed datasets are available at the following URL [Severity_DataSets.zip](https://github.com/AAAAaBae/DeepCSS/blob/main/Severity_DataSets.zip) <br>
+* Identifiers such as ProjectName, PackageName, and ClassName MethodName are filtered by symbols and stop words.
+* Features such as is_constructor, is_abstract, is_inner, and is_static are of bool type and are converted into binary values of 0 or 1.
+* Missing and outlier values are deleted. <br>
+The datasets are preprocessed after the above steps, which the pre-trained model can directly train to convert the text into word-vector. The processed datasets are available at the following URL [Severity_DataSets.zip](https://github.com/AAAAaBae/DeepCSS/blob/main/Severity_DataSets.zip)
