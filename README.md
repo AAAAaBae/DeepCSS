@@ -10,5 +10,5 @@ DeepCSS is evaluated on four types of code smell severity. The experimental resu
 1. Identifiers such as ProjectName, PackageName, and ClassName MethodName are filtered by symbols and stop words.
 2. Features such as is_constructor, is_abstract, is_inner, and is_static are of bool type and are converted into binary values of 0 or 1.
 3. Missing and outlier values are deleted.
-The datasets are preprocessed after the above steps, which the pre-trained model can directly train to convert the text into word-vector.
+The datasets are preprocessed after the above steps, which the pre-trained model can directly train to convert the text into word-vector. <br>
 The processed datasets are available at the following URL[Severity_Datasets.zip]() <br>
