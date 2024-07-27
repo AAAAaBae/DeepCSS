@@ -28,26 +28,25 @@ np.random.seed(seed)
 
 # read data
 data = pd.read_csv("data_path", encoding='UTF-8')
-# data = pd.read_csv("E:/Deeplearning/数据集/严重性分类数据集/dataset-long-method.csv", encoding='UTF-8')  # Fontana经典数据集
 x, y = data.iloc[:, 4:-1], data.iloc[:, -1]    # Class
 # x, y = data.iloc[:, 5:-1], data.iloc[:, -1]  # Method
 
-# 最大最小归一化数据
+# Min-Max
 # scaler = MinMaxScaler()
 # x = scaler.fit_transform(x)
 # x = pd.DataFrame(x)
 
-# 数据平衡
+# data balance
 # sm = SMOTE(random_state=42)
 # x, y = sm.fit_resample(x, y)
 
-# PCA特征选择
-# pca = PCA(n_components=35, random_state=42)    # 方法即阈值选25个  类级设定为35个
+# PCA-FST
+# pca = PCA(n_components=35, random_state=42)    # The threshold for the method is 25, for the class is 35
 # x_pca = pca.fit_transform(x)
 # x_pca = pd.DataFrame(x_pca)
 # x_train, x_test, y_train, y_test = train_test_split(x_pca, y, test_size=0.2, random_state=42)
 
-# 卡方FST
+# Chi-square-FST
 k_best = SelectKBest(score_func=chi2, k=35)
 x_chi = k_best.fit_transform(x, y)
 x_chi = pd.DataFrame(x_chi)
@@ -59,7 +58,7 @@ x_train, x_test, y_train, y_test = train_test_split(x_chi, y, test_size=0.15, ra
 # ml.fit(x_train, y_train)
 
 # DT
-# ml = DecisionTreeClassifier(max_depth=5, random_state=42)  # 初始化 max_depth=5, min_samples_split=20, min_samples_leaf=5, max_features=5, max_leaf_nodes=80,
+# ml = DecisionTreeClassifier(max_depth=5, random_state=42)  # initialization max_depth=5, min_samples_split=20, min_samples_leaf=5, max_features=5, max_leaf_nodes=80
 # ml.fit(x_train, y_train)
 
 # MLP
@@ -88,39 +87,33 @@ x_train, x_test, y_train, y_test = train_test_split(x_chi, y, test_size=0.15, ra
 # GraindentBoost
 ml = GradientBoostingClassifier(n_estimators=150, learning_rate=0.5, max_depth=3, random_state=42)
 ml.fit(x_train, y_train)
-# *********************************************** 网格搜索算法-GradientBoost ******************************************************
-# 定义Gradient Boosting模型参数的网格空间
+# *********************************************** GridSearch-GradientBoost ******************************************************
 # param_grid = {
 #     'n_estimators': [50, 100, 150, 200],
 #     'learning_rate': [0.01, 0.1, 0.5, 1],
 #     'max_depth': [3, 4, 5, 10],
 # }
 #
-# # 使用GridSearchCV进行网格搜索和交叉验证
 # kf = KFold(n_splits=5, shuffle=True, random_state=42)
 # grid_search = GridSearchCV(ml, param_grid, cv=kf, scoring='accuracy', n_jobs=-1)
 # grid_result = grid_search.fit(x_chi, y)
 #
-# # 输出最佳参数组合
 # print("Best parameters found: ", grid_result.best_params_)
 # print("Best accuracy score: ", grid_result.best_score_)
-# *********************************************** 网格搜索算法-AdaBoost ******************************************************
+# *********************************************** GridSearch-AdaBoost ******************************************************
 # param_grid = {
 #     'n_estimators': [50, 100, 150, 200],
 #     'learning_rate': [0.01, 0.1, 0.5, 0.8, 1],
 #     'base_estimator': ['DecisionTreeClassifier', 'deprecated'],
 # }
 #
-# # 使用GridSearchCV进行网格搜索和交叉验证
 # kf = KFold(n_splits=5, shuffle=True, random_state=42)
 # grid_search = GridSearchCV(ml, param_grid, cv=kf, scoring='accuracy', n_jobs=-1)
 # grid_result = grid_search.fit(x_train, y_train)
 #
-# # 输出最佳参数组合
 # print("Best parameters found: ", grid_result.best_params_)
 # print("Best accuracy score: ", grid_result.best_score_)
-# *********************************************** 网格搜索算法-XGBoost ******************************************************
-# # 定义XGBoost模型参数的网格空间
+# *********************************************** GridSearch-XGBoost ******************************************************
 # param_grid = {
 #     'n_estimators': [50, 100, 200],
 #     'max_depth': [3, 4, 5, 10, 20],
@@ -130,16 +123,13 @@ ml.fit(x_train, y_train)
 #     'objective': ['multi:softmax'],
 # }
 #
-# # 使用GridSearchCV进行网格搜索和交叉验证
 # kf = KFold(n_splits=5, shuffle=True, random_state=42)
 # grid_search = GridSearchCV(ml, param_grid, cv=kf, scoring='accuracy', n_jobs=-1)
 # grid_result = grid_search.fit(x_train, y_train)
 #
-# # 输出最佳参数组合
 # print("Best parameters found: ", grid_result.best_params_)
 # print("Best accuracy score: ", grid_result.best_score_)
-# *********************************************** 网格搜索算法-RF / DT******************************************************
-# RF模型的参数空间
+# *********************************************** GridSearch-RF / DT******************************************************
 # param_grid = {
 #     'n_estimators': [10, 50, 100, 200],    # RF
 #     'criterion': ['gini', 'entropy'],
@@ -151,12 +141,12 @@ ml.fit(x_train, y_train)
 # }
 # grid_search = GridSearchCV(estimator=ml, param_grid=param_grid, cv=5, scoring='accuracy')
 # grid_search.fit(x_train, y_train)
-# print("最佳参数组合：", grid_search.best_params_)
+# print("Best parameters found：", grid_search.best_params_)
 # *****************************************************************************************************************
 
 cv_scores = cross_val_score(ml, x_chi, y, cv=5, scoring='accuracy')
-print("5折交叉验证得分：", cv_scores)
-print("平均得分：", np.mean(cv_scores))
+print("5-fold：", cv_scores)
+print("avg：", np.mean(cv_scores))
 accuracy = cv_scores.mean()
 precision = cross_val_score(ml, x_chi, y, cv=5, scoring='precision_macro').mean()
 recall = cross_val_score(ml, x_chi, y, cv=5, scoring='recall_macro').mean()
@@ -165,5 +155,5 @@ f1 = cross_val_score(ml, x_chi, y, cv=5, scoring='f1_macro').mean()
 y_pred = ml.predict(x_test)
 print(classification_report(y_test, y_pred, digits=5))
 corr, p_value = spearmanr(y_test, y_pred)
-print("斯皮尔曼相关性系数：", corr)
-print("P值：", p_value)
+print("spearman：", corr)
+print("P_value：", p_value)
