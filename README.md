@@ -17,4 +17,5 @@ The implementation code of the Baseline Method is available at the following URL
 
 The datasets are preprocessed after the above steps, which the pre-trained model can directly train to convert the text into a word vector. The processed datasets are available at the following URL [Severity_DataSets.zip](https://github.com/AAAAaBae/DeepCSS/blob/main/Severity_DataSets.zip)
 
+## Pipeline
 The Python scripting tool for screening out the smelly instances is available at the following URL [Class.py](https://github.com/AAAAaBae/DeepCSS/blob/main/Class.py) and [Method.py](https://github.com/AAAAaBae/DeepCSS/blob/main/Method.py)<br>
