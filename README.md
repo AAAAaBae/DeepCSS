@@ -11,8 +11,10 @@ The main code for DeepCSS is available at the following URL [DeepCSS_model.py](h
 The Pre_train code is available at the following URL [Pre_train.py](https://github.com/AAAAaBae/DeepCSS/blob/main/Pre_train.py) <br>
 The implementation code of the Baseline Method is available at the following URL [ML_Model.py](https://github.com/AAAAaBae/DeepCSS/blob/main/ML_Model.py) <be>
 ## Dataset
-* Identifiers such as ProjectName, PackageName, and ClassName MethodName are filtered by symbols and stop words.
+* Identifiers text such as ProjectName, PackageName, and ClassName MethodName are filtered by symbols and stop words.
 * Features such as is_constructor, is_abstract, is_inner, and is_static are of bool type and are converted into binary values of 0 or 1.
 * Missing and outlier values are deleted. <br>
 
 The datasets are preprocessed after the above steps, which the pre-trained model can directly train to convert the text into a word vector. The processed datasets are available at the following URL [Severity_DataSets.zip](https://github.com/AAAAaBae/DeepCSS/blob/main/Severity_DataSets.zip)
+
+The Python scripting tool for screening out the smelly instances is available at the following URL [Class.py](https://github.com/AAAAaBae/DeepCSS/blob/main/Class.py) and [Method.py](https://github.com/AAAAaBae/DeepCSS/blob/main/Method.py)<br>
